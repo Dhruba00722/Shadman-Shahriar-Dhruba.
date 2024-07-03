@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,12 @@
     <style>
         body {
             background-color: #E6F7FF;
+            padding-top: 100px; /* Adjusted to create space for the heading */
+            position: relative; /* Ensure the body can position the time bar */
+            margin-bottom: 60px; /* Ensure space at the bottom for the time bar */
+        }
+        h1 {
+            margin-top: 0; /* Remove default margin */
         }
         button {
             border-radius: 90px;
@@ -21,6 +28,48 @@
             vertical-align: middle;
             margin-right: 5px;
         }
+        .time-bar {
+            position: fixed;
+            bottom: 0;
+            left: 90%;
+            transform: translateX(-70%); /* Center horizontally */
+            width: auto;
+            height: auto;
+            background-color: #293336; /* Green background */
+            text-align: center; /* Center text */
+            line-height: 25px; /* Center text vertically */
+            color:white;
+            font-size: 24px; /* Larger font size for time */
+            border-radius: 25px; /* Rounded corners */
+            padding: 0 20px; /* Add padding inside the bar */
+        }
+        .search-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            background-color: #fff;
+            border-radius: 25px;
+            padding: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .search-container input[type=text] {
+            width: 50%; /* Adjusted width for input */
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            font-size: 16px;
+        }
+        .search-container button {
+            background-color: #293336;
+            color: white;
+            border: none;
+            padding: 5px 30px;
+            cursor: pointer;
+            border-radius: 20px;
+        }
     </style>
 </head>
 <body>
@@ -33,7 +82,37 @@
             </button>
         </a>
         <button>Details
-        <img src="details.png" alt=""></button>
+            <img src="details.png" alt="">
+        </button>
     </center>
+
+    <div class="search-container">
+        <input id="searchInput" type="text" placeholder="Search...">
+        <button id="searchButton" type="button">Search</button>
+    </div>
+
+    <div class="time-bar" id="time-bar"></div>
+
+    <script>
+        function updateTimeBar() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric' });
+            document.getElementById('time-bar').textContent = timeString;
+        }
+
+        setInterval(updateTimeBar, 1000);
+
+        updateTimeBar();
+
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const searchQuery = document.getElementById('searchInput').value.trim();
+            if (searchQuery !== '') {
+                console.log('Search Query:', searchQuery);
+                // You can perform further actions with the search query here
+            } else {
+                alert('Please enter a search query.');
+            }
+        });
+    </script>
 </body>
 </html>
