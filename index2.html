@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Shadman Shahriar Dhruba</title>
+      <link rel="icon" href="dhruba.png" type="image/x-icon">
     <style>
         body {
             background-color: #E6F7FF;
@@ -21,6 +22,56 @@
             vertical-align: middle;
             margin-right: 5px;
         }
+        .time-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            height: auto;
+            background-color: #293336;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+            font-size: 24px;
+            border-radius: 25px;
+            padding: 0 20px;
+        }
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            right: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+        }
+        .popup-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            z-index: 1000;
+        }
+        .popup-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .popup-menu li {
+            margin: 10px 0;
+        }
+        .popup-menu a {
+            text-decoration: none;
+            color: #293336;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -32,5 +83,36 @@
                 Back to Home</button>
         </a>
     </center>
+    </div>
+
+    <button class="menu-button" onclick="toggleMenu()">
+        <img src="3dot.png" alt="Menu" class="menu-icon">
+    </button>
+
+    <div class="popup-menu" id="popupMenu">
+        <ul>
+            <li><a href="index.html">Page 1</a></li>
+            <li><a href="index2.html">Page 2</a></li>
+            <li><a href="index3.html">Page 3</a></li>
+        </ul>
+    </div>
+
+    <div class="time-bar" id="time-bar"></div>
+
+    <script>
+        function updateTimeBar() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric' });
+            document.getElementById('time-bar').textContent = timeString;
+        }
+
+        setInterval(updateTimeBar, 1000);
+        updateTimeBar();
+
+        function toggleMenu() {
+            const menu = document.getElementById('popupMenu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
 </body>
 </html>
