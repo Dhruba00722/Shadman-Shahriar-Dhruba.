@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details - Shadman Shahriar Dhruba</title>
+      <link rel="icon" href="dhruba.png" type="image/x-icon">
+    <style>
+        body {
+            background-color: #E6F7FF;
+            padding: 50px;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #293336;
+        }
+        p {
+            line-height: 1.6;
+            color: #333;
+        }
+        .back-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back-button button {
+            background-color: #293336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+        .time-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #293336;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+        }
+        .popup-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            z-index: 1000;
+        }
+        .popup-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .popup-menu li {
+            margin: 10px 0;
+        }
+        .popup-menu a {
+            text-decoration: none;
+            color: #293336;
+            font-weight: bold;
+            display: block;
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Details</h1>
+        <h2>About Shadman Shahriar Dhruba</h2>
+        <p>Shadman Shahriar Dhruba is a web developer with a passion for creating user-friendly and visually appealing websites. With a background in computer science, Shadman has developed a wide range of skills in web development, including HTML, CSS, JavaScript, and various web frameworks.</p>
+        <p>In addition to his technical skills, Shadman is also known for his problem-solving abilities and his dedication to staying up-to-date with the latest trends in web development. He enjoys working on challenging projects and is always looking for opportunities to learn and grow as a developer.</p>
+        <p>When not coding, Shadman enjoys spending time with family and friends, exploring new technologies, and playing Chess 960. His passion for technology and continuous learning makes him a valuable asset to any team.</p>
+        
+        <div class="back-button">
+            <a href="index.html">
+                <button>Back to Home</button>
+            </a>
+        </div>
+    </div>
+
+    <button class="menu-button" onclick="toggleMenu()">
+        <img src="3dot.png" alt="Menu" class="menu-icon">
+    </button>
+
+    <div class="popup-menu" id="popupMenu">
+        <ul>
+            <li><a href="index.html">Page 1</a></li>
+            <li><a href="index2.html">Page 2</a></li>
+            <li><a href="index3.html">Page 3</a></li>
+        </ul>
+    </div>
+
+    <div class="time-bar" id="time-bar"></div>
+
+    <script>
+        function updateTimeBar() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric' });
+            document.getElementById('time-bar').textContent = timeString;
+        }
+
+        setInterval(updateTimeBar, 1000);
+        updateTimeBar();
+
+        function toggleMenu() {
+            const menu = document.getElementById('popupMenu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
