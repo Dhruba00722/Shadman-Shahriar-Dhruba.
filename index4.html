@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Q (version 1)</title>
+    <style>
+        body {
+            background-color: #E6F7FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            padding-top: 20px; /* Adjusted padding */
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+        .calculator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px; /* Added margin between rows */
+        }
+        button {
+            background-color: black;
+            color: white;
+            text-align: center;
+            margin: 5px;
+            padding: 20px; /* Increased padding */
+            width: 70px;
+            height: 70px;
+            font-size: 20px;
+            
+            
+            
+           
+            border-radius: 10px; /* Added border-radius */
+        }
+        button:hover {
+            background-color: #333;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 24px;
+            border: 2px solid green;
+            border-radius: 15px;
+            outline: none;
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+            text-align: right;
+            margin-bottom: 10px; /* Added margin below input */
+        }
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            right: 20px; /* Adjusted right positioning */
+            background: none;
+            border: none;
+            background-color:none;
+            color:none;
+           
+            z-index: 1000; /* Ensured on top of other elements */
+        }
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        .popup-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            z-index: 999; /* Lower than menu button */
+        }
+        .popup-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .popup-menu li {
+            margin: 10px 0;
+        }
+        .popup-menu a {
+            text-decoration: none;
+            color: #293336;
+            font-weight: bold;
+            font-size: 18px; /* Adjusted font size */
+        }
+        .clock-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #FFFFFF;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000; /* Above other elements */
+        }
+        .clock {
+            font-size: 20px;
+        }
+        .nav-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+         
+            
+         
+        }
+     
+        
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div class="clock" id="clock"></div>
+    </div>
+
+    <div class="calculator">
+        <input id="display" type="text" readonly>
+        <div class="row">
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('+')">+</button>
+        </div>
+        <div class="row">
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('-')">-</button>
+        </div>
+        <div class="row">
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('*')">*</button>
+        </div>
+        <div class="row">
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="appendToDisplay('/')">÷</button>
+        </div>
+        <div class="row">
+            <button onclick="appendToDisplay('(')">(</button>
+            <button onclick="appendToDisplay(')')">)</button>
+            <button onclick="calculatePercentage()">%</button>
+            <button onclick="clearDisplay()">AC</button>
+            <button onclick="clearLastEntry()">C</button>
+        </div>
+    </div>
+
+    <button class="menu-button" onclick="toggleMenu()">
+        <img src="3dot.png" alt="Menu" class="menu-icon">
+    </button>
+
+    <div class="popup-menu" id="popupMenu">
+        <ul>
+            <li><a href="index.html">Page 1</a></li>
+            <li><a href="index2.html">Page 2</a></li>
+            <li><a href="index3.html">Page 3</a></li>
+            <li><a href="index4.html">Page 4</a></li>
+        </ul>
+    </div>
+
+    <!-- Navigation button -->
+    <a class="nav-button" href="index.html">Back to Home</a>
+
+    <script>
+        // Function to update the clock
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12; // Convert hour to 12-hour format
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+        }
+
+        // Initial call to update clock
+        updateClock();
+
+        // Update clock every second
+        setInterval(updateClock, 1000);
+
+        // Function to append value to display (from your existing code)
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        // Function to evaluate and calculate (from your existing code)
+        function calculate() {
+            let result;
+            try {
+                result = eval(document.getElementById('display').value);
+                document.getElementById('display').value = result;
+            } catch (error) {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+
+        // Function to clear the display (from your existing code)
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        // Function to clear the last entry (from your existing code)
+        function clearLastEntry() {
+            let currentValue = document.getElementById('display').value;
+            document.getElementById('display').value = currentValue.slice(0, -1);
+        }
+
+        // Function to calculate percentage (from your existing code)
+        function calculatePercentage() {
+            let expression = document.getElementById('display').value;
+            let percentage = eval(expression) / 100;
+            document.getElementById('display').value = percentage;
+        }
+
+        // Toggle menu function (from your existing code)
+        function toggleMenu() {
+            const menu = document.getElementById('popupMenu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
